@@ -92,8 +92,8 @@ GROQ_API_KEY=gsk_your_groq_api_key
 GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=GOCSPX-your_google_client_secret
 
-# Inngest Dev Server Configuration
-INNGEST_BASE_URL=http://127.0.0.1:8288
+# Inngest Dev Server Configuration (Optional for local development)
+# INNGEST_BASE_URL=http://127.0.0.1:8288
 ```
 
 Create a `.env` file in the `client/` directory:

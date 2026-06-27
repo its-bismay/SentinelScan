@@ -23,6 +23,9 @@ import { scanJob } from './src/inngest/functions/scanJob.js';
 
 const app = express();
 
+// Connect Database
+connectDB();
+
 // Security
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 

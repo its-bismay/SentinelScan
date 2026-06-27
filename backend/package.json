@@ -1,0 +1,36 @@
+{
+  "name": "sentinelscan-backend",
+  "version": "1.0.0",
+  "description": "SentinelScan - Web Vulnerability Scanner Backend",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon local.server.js",
+    "start": "node local.server.js",
+    "inngest": "npx inngest-cli@latest dev -u http://localhost:5000/api/inngest"
+  },
+  "keywords": ["security", "scanner", "vulnerability"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
+    "cheerio": "^1.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "groq-sdk": "^0.12.0",
+    "helmet": "^8.0.0",
+    "inngest": "^3.35.4",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^9.7.3",
+    "nodemon": "^3.1.14",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "playwright": "^1.49.1",
+    "uuid": "^11.1.0"
+  }
+}

@@ -14,7 +14,7 @@ const setCookieAndRespond = (res, user, statusCode = 200) => {
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
   });
-  return res.status(statusCode).json({ success: true, user: user.toSafeObject() });
+  return res.status(statusCode).json({ success: true, token, user: user.toSafeObject() });
 };
 
 // --- Register ---
@@ -103,5 +103,5 @@ export const googleCallback = (req, res) => {
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 3 * 24 * 60 * 60 * 1000,
   });
-  res.redirect(`${process.env.CLIENT_URL}/dashboard`);
+  res.redirect(`${process.env.CLIENT_URL}/dashboard?token=${token}`);
 };

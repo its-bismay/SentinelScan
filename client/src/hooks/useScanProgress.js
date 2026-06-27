@@ -66,7 +66,10 @@ export const useScanProgress = (scanId) => {
     if (!scanId || !isMounted.current || isDone) return;
 
     const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-    const sseUrl  = `${baseURL}/scans/${scanId}/progress`;
+    const token = localStorage.getItem('token');
+    const sseUrl = token
+      ? `${baseURL}/scans/${scanId}/progress?token=${encodeURIComponent(token)}`
+      : `${baseURL}/scans/${scanId}/progress`;
 
     const es = new EventSource(sseUrl, { withCredentials: true });
     esRef.current = es;

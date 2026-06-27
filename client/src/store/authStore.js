@@ -9,14 +9,27 @@ export const useAuthStore = create((set) => ({
 
   checkAuth: async () => {
     set({ loading: true, error: null });
+    
+    // Extract token from URL query params if present (from Google OAuth callback redirect)
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('token');
+    if (urlToken) {
+      localStorage.setItem('token', urlToken);
+      // Clean up URL query parameters for security and aesthetics
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+    }
+
     try {
       const response = await axiosClient.get('/auth/me');
       if (response.data?.success) {
         set({ user: response.data.user, isAuthenticated: true, loading: false });
       } else {
+        localStorage.removeItem('token');
         set({ user: null, isAuthenticated: false, loading: false });
       }
     } catch (err) {
+      localStorage.removeItem('token');
       set({ user: null, isAuthenticated: false, loading: false });
     }
   },
@@ -26,6 +39,9 @@ export const useAuthStore = create((set) => ({
     try {
       const response = await axiosClient.post('/auth/register', { name, email, password });
       if (response.data?.success) {
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
         set({ user: response.data.user, isAuthenticated: true, loading: false });
         return { success: true };
       }
@@ -41,6 +57,9 @@ export const useAuthStore = create((set) => ({
     try {
       const response = await axiosClient.post('/auth/login', { email, password });
       if (response.data?.success) {
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
         set({ user: response.data.user, isAuthenticated: true, loading: false });
         return { success: true };
       }
@@ -58,6 +77,7 @@ export const useAuthStore = create((set) => ({
     } catch (err) {
       // ignore
     } finally {
+      localStorage.removeItem('token');
       set({ user: null, isAuthenticated: false, loading: false });
     }
   },
